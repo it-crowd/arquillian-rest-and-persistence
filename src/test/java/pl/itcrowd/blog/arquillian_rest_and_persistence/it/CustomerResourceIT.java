@@ -8,6 +8,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.unitils.dbunit.annotation.DataSet;
 import pl.itcrowd.blog.arquillian_rest_and_persistence.app.Customer;
 import pl.itcrowd.blog.arquillian_rest_and_persistence.app.CustomerResource;
 
@@ -16,7 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Arquillian.class)
-public class CustomerResourceIT {
+public class CustomerResourceIT extends UnitilsAwareTest {
 
     @Deployment(testable = false)
     public static Archive createArchive()
@@ -26,6 +27,7 @@ public class CustomerResourceIT {
             .addPackages(true, CustomerResource.class.getPackage());
     }
 
+    @DataSet
     @Test
     public void getAllCustomers_always_returnsAllCustomersFromDB(@ArquillianResteasyResource CustomerResource resource) throws Exception
     {
