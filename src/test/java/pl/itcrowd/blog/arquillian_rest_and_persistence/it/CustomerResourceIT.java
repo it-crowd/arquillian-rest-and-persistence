@@ -24,7 +24,8 @@ public class CustomerResourceIT extends UnitilsAwareTest {
     {
         return ShrinkWrap.create(WebArchive.class, "CustomerResourceIT.war")
             .addAsResource("META-INF/persistence.xml")
-            .addPackages(true, CustomerResource.class.getPackage());
+            .addPackages(true, CustomerResource.class.getPackage())
+            .addClass(CacheTestResource.class);
     }
 
     @DataSet

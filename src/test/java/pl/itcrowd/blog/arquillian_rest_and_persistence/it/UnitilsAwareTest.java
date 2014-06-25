@@ -1,6 +1,8 @@
 package pl.itcrowd.blog.arquillian_rest_and_persistence.it;
 
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.logging.Logger;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.TestWatchman;
 import org.junit.runners.model.FrameworkMethod;
@@ -13,6 +15,8 @@ import org.unitils.dbmaintainer.structure.ConstraintsDisabler;
 import org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils;
 
 import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URL;
 import java.util.Properties;
 
 public abstract class UnitilsAwareTest {
@@ -55,5 +59,16 @@ public abstract class UnitilsAwareTest {
         }
     };
 
+    @ArquillianResource
+    protected URL deploymentURL;
+
     private Logger logger = Logger.getLogger(getClass());
+
+    @Before
+    public void setUp() throws Exception
+    {
+        final URI resolve = deploymentURL.toURI().resolve("rest/cache-test-controller");
+        final URL url = resolve.toURL();
+        url.openStream().close();
+    }
 }
